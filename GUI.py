@@ -94,9 +94,9 @@ class Counter:
 
         # 刷新数据用的函数
         def refresh():
-            print("refreshed")
-            for it in table.get_children():
-                table.delete(it)
+            for i in table.get_children():
+                table.delete(i)
+
             for x in range(1, 10):
                 table.insert("", x, f"item{x}",
                              values=(COLOR_DICT[x], self.stat[x], format(self.stat[x] / self.total, ".2f")))

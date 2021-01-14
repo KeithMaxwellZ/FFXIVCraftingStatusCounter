@@ -48,7 +48,7 @@ if __name__ == '__main__':
     }
 
     c = Counter()
-    _thread.start_new_thread(c.run_gui, (c,))
+    _thread.start_new_thread(c.run_gui, ())
 
     while True:
         processed_data = get_processed_data()
