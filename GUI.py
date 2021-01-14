@@ -13,7 +13,7 @@ class Counter:
     记录信息与启动gui
     """
     def __init__(self):
-        self.total = 0
+        self.total = 1
         self.save_count = 0
         self.stat = {
             1: 0,

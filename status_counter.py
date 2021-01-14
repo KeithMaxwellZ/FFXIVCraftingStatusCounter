@@ -24,10 +24,10 @@ APP_CONFIG = {
 # 从这里启动
 if __name__ == '__main__':
     if os.path.isfile("config.txt"):
-        with open("config.txt", 'w') as f:
+        with open("config.txt", 'r', encoding='utf-8') as f:
             while f.readable():
                 s = f.readline()
-                temp_line = s.split(":")
+                temp_line = s.split("=")
                 APP_CONFIG[temp_line[0]] = temp_line[1]
     hwnd = FindWindow(None, APP_CONFIG["name"])  # 获取窗口句柄
     m = Memory64(hwnd)
