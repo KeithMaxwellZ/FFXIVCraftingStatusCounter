@@ -72,6 +72,9 @@ class Counter:
         print("started")
         # 创建窗口
         main_frame = tk.Tk()
+        main_frame.wm_attributes("-alpha", 0.8)  # 透明度(0.0~1.0)
+        # main_frame.wm_attributes("-toolwindow", True)  # 置为工具窗口(没有最大最小按钮)
+        main_frame.wm_attributes("-topmost", True)  # 永远处于顶层
 
         # 创建表格控件
         table = ttk.Treeview(main_frame, show="headings")
