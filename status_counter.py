@@ -4,6 +4,7 @@ from win32con import PROCESS_ALL_ACCESS  # win32con里面放的是一些pywin32�
 from win32process import GetWindowThreadProcessId, EnumProcessModules  # 通过窗口句柄获取进程ID
 import time
 import _thread
+import os
 
 from util import Memory64
 from GUI import Counter
@@ -15,9 +16,20 @@ def get_processed_data():
     return [ret_color, ret_round]
 
 
+APP_CONFIG = {
+    "name": "最终幻想XIV"
+}
+
+
 # 从这里启动
 if __name__ == '__main__':
-    hwnd = FindWindow(None, "最终幻想XIV")  # 获取窗口句柄
+    if os.path.isfile("config.txt"):
+        with open("config.txt", 'w') as f:
+            while f.readable():
+                s = f.readline()
+                temp_line = s.split(":")
+                APP_CONFIG[temp_line[0]] = temp_line[1]
+    hwnd = FindWindow(None, APP_CONFIG["name"])  # 获取窗口句柄
     m = Memory64(hwnd)
 
     p_id = GetWindowThreadProcessId(hwnd)[1]
