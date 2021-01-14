@@ -19,7 +19,8 @@ for i in range(1, 10):
 s = ""
 for i in range(1, 10):
     s += f"{COLOR_DICT[i]}:{res[str(i)]} ------ {format(res[str(i)]/total, '.2f')}" + "\n"
-    print(s)
+
+print(s)
 
 with open("res.txt", 'w', encoding='utf-8') as f:
     f.write(s)
