@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 import _thread
+import os
+import datetime
+import json
 
 from util import COLOR_DICT
 
@@ -11,6 +14,7 @@ class Counter:
     """
     def __init__(self):
         self.total = 0
+        self.save_count = 0
         self.stat = {
             1: 0,
             2: 0,
@@ -24,6 +28,20 @@ class Counter:
             10: 0
         }
 
+        # 检查与创建文件
+        self.check_save_path()
+        self.now = datetime.datetime.now()
+        self.fname = f"data/{str(self.now).replace(':', '')}.txt"
+        open(self.fname, "w", encoding="utf-8")
+
+    def check_save_path(self):
+        """
+        检查文件夹是否存在
+        :return:
+        """
+        if not os.path.isdir("data"):
+            os.mkdir("data")
+
     def add_data(self, color: int):
         """
         添加状态数据
@@ -32,6 +50,11 @@ class Counter:
         """
         self.total += 1
         self.stat[color] += 1
+
+        self.save_count += 1
+        if self.save_count >= 10:
+            self.save_data()
+            self.save_count = 0
 
     def print_data(self):
         """
@@ -72,8 +95,8 @@ class Counter:
         # 刷新数据用的函数
         def refresh():
             print("refreshed")
-            for i in table.get_children():
-                table.delete(i)
+            for it in table.get_children():
+                table.delete(it)
             for x in range(1, 10):
                 table.insert("", x, f"item{x}",
                              values=(COLOR_DICT[x], self.stat[x], format(self.stat[x] / self.total, ".2f")))
@@ -82,6 +105,10 @@ class Counter:
         # 设置刷新间隔 （）
         main_frame.after(100, refresh)
         main_frame.mainloop()
+
+    def save_data(self):
+        with open(self.fname, "w") as f:
+            json.dump(self.stat, f)
 
 
 # 测试用函数，可以无视
