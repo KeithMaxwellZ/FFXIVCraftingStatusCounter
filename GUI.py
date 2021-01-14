@@ -71,7 +71,6 @@ class Counter:
 
         # 刷新数据用的函数
         def refresh():
-            print("refreshed")
             for i in table.get_children():
                 table.delete(i)
             for x in range(1, 10):
